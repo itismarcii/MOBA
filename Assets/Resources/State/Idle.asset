@@ -9,13 +9,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ef94e796d6f771d49acf270664bf8e19, type: 3}
-  m_Name: Alive
+  m_Script: {fileID: 11500000, guid: 4bbc21da45e776945bb01b575085a5e7, type: 3}
+  m_Name: Idle
   m_EditorClassIdentifier: 
-  Transitions: []
-  OnEnter:
-    m_PersistentCalls:
-      m_Calls: []
-  OnExit:
-    m_PersistentCalls:
-      m_Calls: []

@@ -1,32 +1,54 @@
+using System.Linq;
+using BaseClass;
 using UnityEngine;
 
 namespace System.StateMachine
 {
-    public class StateMachine
+    public class StateMachine : MonoBehaviour
     {
-        private IState CurrentState { get; set; }
-        public State GetCurrentState() => CurrentState.GetState();
-
-        protected internal StateMachine(IState startingState) => ChangeState(startingState);
-
-        public void ChangeState(IState state)
+        private Character Character;
+        [SerializeField] private CharacterState CurrentState; 
+        [SerializeField] private Condition[] Conditions;
+        
+        private void Awake()
         {
-            CurrentState = state;
+            Character = GetComponent<Character>();
+            Conditions = UnityEngine.Resources.LoadAll<Condition>("State");
+            foreach (var condition in Conditions) condition.SetCharacter(Character);
         }
 
-        public void Tick()
+        internal CharacterState GetCurrentState() => CurrentState;
+
+        internal void ChangeState(CharacterState state)
         {
-            try
+            if(!TransitionAllowance(state)) return;
+            CurrentState = state;
+        
+            switch (state)
             {
-                var nextState = CurrentState.ProcessTransitions();
-                if(nextState != null) ChangeState(nextState);
+                case CharacterState._Idle_:
+                    break;
+                case CharacterState._Walk_:
+                    break;
+                case CharacterState._CastAbility_:
+                    break;
+                case CharacterState._Stunned_:
+                    break;
+                case CharacterState._Charmed_:
+                    break;
+                case CharacterState._Slowed_:
+                    break;
+                case CharacterState._Death_:
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(state), state, null);
             }
-            catch
-            {
-                Debug.LogError("Please select a valid Starting State");
-                Application.Quit();
-            }
-            
+        }
+
+        private bool TransitionAllowance(CharacterState state)
+        {
+            var condition = Conditions.FirstOrDefault(condition => condition.GetStateCondition() == state);
+            return condition != null && condition.IsMet();
         }
     }
 }

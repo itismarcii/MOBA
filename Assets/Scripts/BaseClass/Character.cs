@@ -1,13 +1,13 @@
 using System;
 using System.Linq;
+using System.StateMachine;
 using UnityEngine;
 using UnityEngine.AI;
-using System.StateMachine;
-using StateMachineBehaviour = System.StateMachine.StateMachineBehaviour;
+
 
 namespace BaseClass
 {
-    [RequireComponent(typeof(NavMeshAgent), typeof(Rigidbody), typeof(StateMachineBehaviour))]
+    [RequireComponent(typeof(NavMeshAgent), typeof(Rigidbody), typeof(StateMachine))]
     public abstract class Character : MonoBehaviour
     {
         public enum Team
@@ -16,7 +16,7 @@ namespace BaseClass
             _Team2_
         }
 
-        private StateMachineBehaviour StateMachine;
+        private StateMachine StateMachine;
         
         private string CharacterName = "";
         [SerializeField] private Team TeamEnum;
@@ -47,7 +47,7 @@ namespace BaseClass
 
         private void Awake()
         {
-            StateMachine = GetComponent<StateMachineBehaviour>();
+            StateMachine = GetComponent<StateMachine>();
             GetComponent<Rigidbody>().isKinematic = true;
             Agent = GetComponent<NavMeshAgent>();
             Agent.angularSpeed = 1000;
@@ -59,7 +59,7 @@ namespace BaseClass
         #region Getter & Setter
 
         // GETTER
-        internal State GetState() => StateMachine.GetCurrentState();
+        internal CharacterState GetCurrentState() => StateMachine.GetCurrentState();
         internal string GetCharacterName() => CharacterName;
         internal Team GetTeam() => TeamEnum;
         internal bool GetIsAlive() => IsAlive;
@@ -81,6 +81,7 @@ namespace BaseClass
         internal NavMeshAgent GetAgent() => Agent;
 
         // SETTER
+        internal void ChangeCurrentState(CharacterState state) => StateMachine.ChangeState(state);
         internal void SetCharacterName(string characterName) => CharacterName = characterName;
         internal void SetTeam(Team team) => TeamEnum = team;
         internal void SetIsAlive(bool alive) => IsAlive = alive;
