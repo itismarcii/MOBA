@@ -9,6 +9,11 @@ namespace System.StateMachine
         [SerializeField] private State[] States;
         private StateMachine StateMachine_;
 
+        private void OnEnable()
+        {
+            var state = States.FirstOrDefault(state => state.IsValid());
+            if (state != null) startingState = state;
+        }
 
         private StateMachine StateMachine
         {

@@ -1,3 +1,5 @@
+using UnityEngine;
+
 namespace System.StateMachine
 {
     public class StateMachine
@@ -14,9 +16,17 @@ namespace System.StateMachine
 
         public void Tick()
         {
-            var nextState = CurrentState.ProcessTransitions();
-        
-            if(nextState != null) ChangeState(nextState);
+            try
+            {
+                var nextState = CurrentState.ProcessTransitions();
+                if(nextState != null) ChangeState(nextState);
+            }
+            catch
+            {
+                Debug.LogError("Please select a valid Starting State");
+                Application.Quit();
+            }
+            
         }
     }
 }

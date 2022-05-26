@@ -12,7 +12,12 @@ namespace System.StateMachine
         [SerializeField] private UnityEvent OnEnter = new UnityEvent();
         [SerializeField] private UnityEvent OnExit = new UnityEvent();
 
-        public IState ProcessTransitions() => Transitions.First(transition => transition.ShouldTransition).NextState;
+        public IState ProcessTransitions() => Transitions.FirstOrDefault(transition => transition.ShouldTransition)?.NextState;
         public State GetState() => this;
+
+        public bool IsValid()
+        {
+            return Transitions.Count > 0;
+        }
     }
 }
