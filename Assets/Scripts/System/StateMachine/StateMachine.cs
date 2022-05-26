@@ -19,30 +19,11 @@ namespace System.StateMachine
 
         internal CharacterState GetCurrentState() => CurrentState;
 
-        internal void ChangeState(CharacterState state)
+        internal bool ChangeState(CharacterState state)
         {
-            if(!TransitionAllowance(state)) return;
+            if(!TransitionAllowance(state)) return false;
             CurrentState = state;
-        
-            switch (state)
-            {
-                case CharacterState._Idle_:
-                    break;
-                case CharacterState._Walk_:
-                    break;
-                case CharacterState._CastAbility_:
-                    break;
-                case CharacterState._Stunned_:
-                    break;
-                case CharacterState._Charmed_:
-                    break;
-                case CharacterState._Slowed_:
-                    break;
-                case CharacterState._Death_:
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(state), state, null);
-            }
+            return true;
         }
 
         private bool TransitionAllowance(CharacterState state)

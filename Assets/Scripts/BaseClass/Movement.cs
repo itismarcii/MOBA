@@ -1,4 +1,5 @@
 using System;
+using System.StateMachine;
 using UnityEngine;
 using BaseClass;
 using UnityEngine.AI;
@@ -11,6 +12,9 @@ public static class Movement
     
     public static bool MoveTowards(Character character, Vector3 targetPosition)
     {
+        if (character.GetCurrentState() != CharacterState._Walk_ &&
+            character.GetCurrentState() != CharacterState._Slowed_) return false;
+        
         var agent = character.GetAgent();
         var movementSpeed = character.GetMovementSpeed();
         if (movementSpeed < 0) movementSpeed = 0;
@@ -18,7 +22,7 @@ public static class Movement
         agent.speed = movementSpeed;
         agent.SetDestination(targetPosition);
         
-        return agent.isStopped;
+        return agent.hasPath;
     }
     
     public static bool MoveTowards(Spell spell, Vector3 targetPosition)

@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using System.StateMachine;
 using BaseClass;
 using UnityEngine;
 
@@ -47,6 +48,7 @@ public class InputListener : MonoBehaviour
 
     private void RightClick()
     {
+        if(!Character.ChangeCurrentState(CharacterState._Walk_)) return;
         var ray = MainCamera.ScreenPointToRay(Input.mousePosition);
 
         if (!Physics.Raycast(ray, out var hit)) return;
@@ -65,8 +67,16 @@ public class InputListener : MonoBehaviour
     
     private void FixedUpdate()
     {
-        if (!MoveCommand) return;
-        if (Movement.MoveTowards(Character, TargetPosition)) MoveCommand = false;
+        if (!MoveCommand)
+        {
+            if ((Character.GetCurrentState() == CharacterState._Walk_ ||
+                Character.GetCurrentState() == CharacterState._Slowed_) &&
+                !Character.GetAgent().hasPath)
+                Character.ChangeCurrentState(CharacterState._Idle_);
+            return;
+        }
+        if (!Movement.MoveTowards(Character, TargetPosition)) return;
+        MoveCommand = false;
     }
 
     void Ability(AbilityEnum ability)

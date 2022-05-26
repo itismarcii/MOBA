@@ -81,7 +81,7 @@ namespace BaseClass
         internal NavMeshAgent GetAgent() => Agent;
 
         // SETTER
-        internal void ChangeCurrentState(CharacterState state) => StateMachine.ChangeState(state);
+        internal bool ChangeCurrentState(CharacterState state) => StateMachine.ChangeState(state);
         internal void SetCharacterName(string characterName) => CharacterName = characterName;
         internal void SetTeam(Team team) => TeamEnum = team;
         internal void SetIsAlive(bool alive) => IsAlive = alive;
