@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Linq;
 using BaseClass;
 using UnityEngine;
@@ -24,6 +25,21 @@ namespace System.StateMachine
             if(!TransitionAllowance(state)) return false;
             CurrentState = state;
             return true;
+        }
+
+        internal bool ChangeState(CharacterState state, int duration)
+        {
+            if(!TransitionAllowance(state)) return false;
+            StartCoroutine(StateDuration_(state, duration));
+            return true;
+        }
+
+        IEnumerator StateDuration_(CharacterState state, int duration)
+        {
+            var pastState = CurrentState;
+            CurrentState = state;
+            yield return new WaitForSeconds(duration);
+            CurrentState = pastState;
         }
 
         private bool TransitionAllowance(CharacterState state)

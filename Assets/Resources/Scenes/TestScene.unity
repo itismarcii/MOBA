@@ -496,7 +496,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c5f5e62bbbb152b479e4a03ade4189b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CurrentState: 3
+  CurrentState: 0
   Conditions: []
 --- !u!1 &1007485961
 GameObject:

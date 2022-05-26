@@ -11,7 +11,7 @@ public class ChloePrice : Character
     private void Start()
     {
         SetMovementSpeed(1);
-        ChangeCurrentState(CharacterState._Walk_);
+        ChangeCurrentState(CharacterState._Stunned_, 3);
     }
 
     internal override void NormalAttack(Character target)
