@@ -10,6 +10,8 @@ namespace System.StateMachine
         private Character Character;
         [SerializeField] private CharacterState CurrentState; 
         private Condition[] Conditions;
+        private IEnumerator CurrentCoroutine;
+        private CharacterState? PastState;
         
         private void Awake()
         {
@@ -44,16 +46,18 @@ namespace System.StateMachine
         internal bool ChangeState(CharacterState state, float duration)
         {
             if(!TransitionAllowance(state)) return false;
-            StartCoroutine(StateDuration_(state, duration));
+            if(CurrentCoroutine != null) StopCoroutine(CurrentCoroutine);
+            CurrentCoroutine = StateDuration_(state, duration);
+            StartCoroutine(CurrentCoroutine);
             return true;
         }
 
         IEnumerator StateDuration_(CharacterState state, float duration)
         {
-            var pastState = CurrentState;
+            if(CurrentState != state) PastState = CurrentState;
             CurrentState = state;
             yield return new WaitForSeconds(duration);
-            CurrentState = pastState;
+            if(PastState != null) CurrentState = (CharacterState) PastState;
         }
 
         internal bool TransitionAllowance(CharacterState state)

@@ -137,19 +137,67 @@ namespace BaseClass
         internal abstract void MagicAttack(Character target);
         
         internal abstract void ActivatePassive(Character target);
-        internal abstract void ActivateFirstAbility(Character target);
-        internal abstract void ActivateFirstAbility(Vector3 target);
-        internal abstract void ActivateFirstAbility(Building target);
-        internal abstract void ActivateSecondAbility(Character target);
-        internal abstract void ActivateSecondAbility(Vector3 target);
-        internal abstract void ActivateSecondAbility(Building target);
-        internal abstract void ActivateThirdAbility(Character target);
-        internal abstract void ActivateThirdAbility(Vector3 target);
-        internal abstract void ActivateThirdAbility(Building target);
-        internal abstract void ActivateUltimateAbility(Character target);
-        internal abstract void ActivateUltimateAbility(Vector3 target);
-        internal abstract void ActivateUltimateAbility(Building target);
 
+        internal virtual void ActivateFirstAbility(Character target)
+        {
+            if(CanTransitionTo(CharacterState._CastAbility_)) return;
+        }
+        
+        internal virtual void ActivateFirstAbility(Vector3 target)
+        {
+            if(CanTransitionTo(CharacterState._CastAbility_)) return;
+        }
+        
+        internal virtual void ActivateFirstAbility(Building target)
+        {
+            if(CanTransitionTo(CharacterState._CastAbility_)) return;
+        }
+        
+        internal virtual void ActivateSecondAbility(Character target)
+        {
+            if(CanTransitionTo(CharacterState._CastAbility_)) return;
+        }
+        
+        internal virtual void ActivateSecondAbility(Vector3 target)
+        {
+            if(CanTransitionTo(CharacterState._CastAbility_)) return;
+        }
+        
+        internal virtual void ActivateSecondAbility(Building target)
+        {
+            if(CanTransitionTo(CharacterState._CastAbility_)) return;
+        }
+        
+        internal virtual void ActivateThirdAbility(Character target)
+        {
+            if(CanTransitionTo(CharacterState._CastAbility_)) return;
+        }
+        
+        internal virtual void ActivateThirdAbility(Vector3 target)
+        {
+            if(CanTransitionTo(CharacterState._CastAbility_)) return;
+        }
+        
+        internal virtual void ActivateThirdAbility(Building target)
+        {
+            if(CanTransitionTo(CharacterState._CastAbility_)) return;
+        }
+        
+        internal virtual void ActivateUltimateAbility(Character target)
+        {
+            if(CanTransitionTo(CharacterState._CastAbility_)) return;
+        }
+        
+        internal virtual void ActivateUltimateAbility(Vector3 target)
+        {
+            if(CanTransitionTo(CharacterState._CastAbility_)) return;
+        }
+
+        internal virtual void ActivateUltimateAbility(Building target)
+        {
+            if(CanTransitionTo(CharacterState._CastAbility_)) return;
+        }
+        
         #endregion
 
         #region System
