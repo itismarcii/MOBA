@@ -12,6 +12,7 @@ public class ChloePrice : Character
     {
         SetMovementSpeed(1);
         ChangeCurrentState(CharacterState._Stunned_, 3);
+        SetWalkAndCast(false);
     }
 
     internal override void NormalAttack(Character target)
@@ -43,6 +44,7 @@ public class ChloePrice : Character
         fireball.transform.position = SpellCastPosition.transform.position;
         target = new Vector3(target.x, SpellCastPosition.position.y, target.z);
         fireball.MoveTowards(target);
+        ChangeCurrentState(CharacterState._CastAbility_, fireball.GetCastingSpeed());
     }
 
     internal override void ActivateFirstAbility(Building target)

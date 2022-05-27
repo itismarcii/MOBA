@@ -5,11 +5,6 @@ namespace System.StateMachine
 {
     public class IdleCondition : Condition
     {
-        private void Awake()
-        {
-            StateCondition = CharacterState._Idle_;
-        }
-
         internal override bool IsMet()
         {
             return true;

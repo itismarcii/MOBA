@@ -3,6 +3,7 @@ using System.Linq;
 using System.StateMachine;
 using BaseClass;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class InputListener : MonoBehaviour
 {
@@ -70,9 +71,14 @@ public class InputListener : MonoBehaviour
         if (!MoveCommand)
         {
             if ((Character.GetCurrentState() == CharacterState._Walk_ ||
-                Character.GetCurrentState() == CharacterState._Slowed_) &&
-                !Character.GetAgent().hasPath)
-                Character.ChangeCurrentState(CharacterState._Idle_);
+                 Character.GetCurrentState() == CharacterState._Slowed_))
+            {
+                if (Character.GetAgent().speed == 0) Character.GetAgent().speed = Character.GetMovementSpeed();
+                if (!Character.GetAgent().hasPath) Character.ChangeCurrentState(CharacterState._Idle_);
+                return;
+            }
+
+            Character.GetAgent().speed = 0;
             return;
         }
         if (!Movement.MoveTowards(Character, TargetPosition)) return;

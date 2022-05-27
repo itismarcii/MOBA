@@ -82,7 +82,7 @@ namespace BaseClass
 
         // SETTER
         internal bool ChangeCurrentState(CharacterState state) => StateMachine.ChangeState(state);
-        internal bool ChangeCurrentState(CharacterState state, int duration) => StateMachine.ChangeState(state, duration);
+        internal bool ChangeCurrentState(CharacterState state, float duration) => StateMachine.ChangeState(state, duration);
         internal void SetCharacterName(string characterName) => CharacterName = characterName;
         internal void SetTeam(Team team) => TeamEnum = team;
         internal void SetIsAlive(bool alive) => IsAlive = alive;
@@ -125,6 +125,8 @@ namespace BaseClass
             skills.Remove(effect);
             Skills = skills.ToArray();
         }
+
+        internal void SetWalkAndCast(bool state) => StateMachine.SetCastAndWalk(state);
 
         #endregion
 

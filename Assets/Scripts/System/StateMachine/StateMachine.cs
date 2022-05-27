@@ -16,11 +16,23 @@ namespace System.StateMachine
             Character = GetComponent<Character>();
             Conditions = new Condition[] { 
                 new IdleCondition(Character, CharacterState._Idle_), 
-                new WalkCondition(Character, CharacterState._Walk_), 
-                new StunnedCondition(Character, CharacterState._Stunned_) };
+                new WalkCondition(Character, CharacterState._Walk_, false),
+                new CastAbilityCondition(Character, CharacterState._CastAbility_),
+                new StunnedCondition(Character, CharacterState._Stunned_) 
+            };
         }
 
         internal CharacterState GetCurrentState() => CurrentState;
+
+        internal void SetCastAndWalk(bool state)
+        {
+            for (var i = 0; i < Conditions.Length; i++)
+            {
+                if (Conditions[i].GetStateCondition() != CharacterState._Walk_) continue;
+                var condition = new WalkCondition(Character, CharacterState._Walk_, state);
+                Conditions[i] = condition;
+            }
+        }
 
         internal bool ChangeState(CharacterState state)
         {
@@ -29,14 +41,14 @@ namespace System.StateMachine
             return true;
         }
 
-        internal bool ChangeState(CharacterState state, int duration)
+        internal bool ChangeState(CharacterState state, float duration)
         {
             if(!TransitionAllowance(state)) return false;
             StartCoroutine(StateDuration_(state, duration));
             return true;
         }
 
-        IEnumerator StateDuration_(CharacterState state, int duration)
+        IEnumerator StateDuration_(CharacterState state, float duration)
         {
             var pastState = CurrentState;
             CurrentState = state;

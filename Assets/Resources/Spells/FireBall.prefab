@@ -111,4 +111,5 @@ MonoBehaviour:
   AreaRange: 5
   TravellingRange: 3
   TravellingSpeed: 3
+  CastingSpeed: 1
   Effect: {fileID: 0}

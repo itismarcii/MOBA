@@ -10,6 +10,7 @@ namespace BaseClass
         [SerializeField] private int AreaRange;
         [SerializeField] private int TravellingRange;
         [SerializeField] private float TravellingSpeed;
+        [SerializeField] private float CastingSpeed;
         [SerializeField] private Effect Effect;
 
         private float TravelledDistance = 0;
@@ -24,6 +25,7 @@ namespace BaseClass
         internal int GetAreaRange() => AreaRange;
         internal int GetTravellingRange() => TravellingRange;
         internal float GetTravellingSpeed() => TravellingSpeed;
+        internal float GetCastingSpeed() => CastingSpeed;
         internal Effect GetEffect() => Effect;
         internal float GetTravelledDistance() => TravelledDistance;
 
@@ -31,6 +33,7 @@ namespace BaseClass
         internal void SetAreaRange(int range) => AreaRange = range;
         internal void SetTravellingRange(int range) => TravellingRange = range;
         internal void SetTravellingSpeed(float speed) => TravellingSpeed = speed;
+        internal void SetCastingSpeed(float speed) => CastingSpeed = speed;
         internal void SetEffect(Effect effect) => Effect = effect;
         internal void SetTravelledDistance(float distance) => TravelledDistance = distance; 
 
