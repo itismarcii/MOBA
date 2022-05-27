@@ -8,7 +8,8 @@ using UnityEngine.AI;
 namespace BaseClass
 {
     [RequireComponent(typeof(NavMeshAgent), typeof(Rigidbody), typeof(StateMachine))]
-    public abstract class Character : MonoBehaviour
+
+    public abstract class Character : MagicBehaviour
     {
         public enum Team
         {
@@ -45,7 +46,7 @@ namespace BaseClass
 
         private NavMeshAgent Agent;
 
-        private void Awake()
+        public override void _Awake_()
         {
             StateMachine = GetComponent<StateMachine>();
             GetComponent<Rigidbody>().isKinematic = true;
@@ -55,6 +56,7 @@ namespace BaseClass
 
             transform.tag = "Character";
         }
+        
 
         #region Getter & Setter
 

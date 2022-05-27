@@ -2,7 +2,6 @@ using System;
 using System.StateMachine;
 using UnityEngine;
 using BaseClass;
-using UnityEngine.AI;
 
 public static class Movement
 {

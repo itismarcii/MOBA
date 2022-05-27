@@ -1,13 +1,12 @@
+using System;
 using UnityEngine;
 
 namespace BaseClass
 {
-    
-    public abstract class Effect : MonoBehaviour
+    public abstract class Effect : MagicBehaviour
     {
         private string EffectName = "";
         private int CoolDown;
-
         
         #region Getter & Setter
         

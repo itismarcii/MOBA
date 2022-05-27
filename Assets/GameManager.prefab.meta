@@ -1,7 +1,12 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/Scripts/System/Conditions.meta
 guid: 47bb05f5bc41a20439697702feae0a0d
 folderAsset: yes
 DefaultImporter:
+========
+guid: cb29a194040d24a4592f50d94f142326
+PrefabImporter:
+>>>>>>>> develop:Assets/GameManager.prefab.meta
   externalObjects: {}
   userData: 
   assetBundleName: 
