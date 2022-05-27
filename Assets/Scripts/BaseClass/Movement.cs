@@ -1,7 +1,5 @@
-using System;
 using UnityEngine;
 using BaseClass;
-using UnityEngine.AI;
 
 public static class Movement
 {

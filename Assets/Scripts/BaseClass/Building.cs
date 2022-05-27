@@ -1,10 +1,8 @@
-using UnityEngine;
+using System;
 
 namespace BaseClass
 {
-    
-
-    public abstract class Building : MonoBehaviour
+    public abstract class Building : MagicBehaviour
     {
         private string BuildingName = "";
         private int CoolDown;

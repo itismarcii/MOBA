@@ -1,10 +1,9 @@
 using System;
-using System.Security.Cryptography;
 using UnityEngine;
 
 namespace BaseClass
 {
-    public abstract class Spell : MonoBehaviour
+    public abstract class Spell : MagicBehaviour
     {
         private Character Caster;
         [SerializeField] private int AreaRange;
@@ -43,13 +42,13 @@ namespace BaseClass
         internal abstract void StartSpell(Building building);
         internal abstract void StartSpell(Building[] buildings);
 
-        private void Awake()
+        public override void _Awake_()
         {
             if (TravellingSpeed < 0) TravellingSpeed = 0;
             IsTravelling = false;
         }
 
-        private void FixedUpdate()
+        public override void _FixedUpdate_()
         {
             if (!IsTravelling) return;
             if (IsUpdating)
@@ -59,7 +58,7 @@ namespace BaseClass
             
             if (Movement.MoveTowards(this, TargetVector3)) ;
         }
-        
+
         internal void MoveTowards(Vector3 target)
         {
             TargetVector3 = target;
