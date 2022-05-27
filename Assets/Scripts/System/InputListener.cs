@@ -2,7 +2,6 @@ using System.Linq;
 using System.StateMachine;
 using BaseClass;
 using UnityEngine;
-using UnityEngine.AI;
 
 namespace System
 {
@@ -11,7 +10,7 @@ namespace System
         private Character[] AllCharacter;
         private Character Character;
         private Camera MainCamera;
-    
+
         private bool MoveCommand = false;
         private Vector3 TargetPosition;
 
@@ -22,66 +21,14 @@ namespace System
         [SerializeField] private KeyCode ThirdAbility;
         [SerializeField] private KeyCode UltimateAbility;
 
-    
-    enum AbilityEnum
-    {
-        _First_,
-        _Second_,
-        _Third_,
-        _Ultimate_
-    }
 
-    private void Start()
-    {
-        Character = transform.GetComponent<Character>();
-        MainCamera = Camera.main;
-
-        AllCharacter = FindObjectsOfType<Character>();
-    }
-
-    private void Update()
-    {
-        if (Input.GetMouseButtonDown(1)) RightClick();
-        if(Input.GetKeyDown(FirstAbility)) Ability(AbilityEnum._First_);
-        if(Input.GetKeyDown(SecondAbility)) Ability(AbilityEnum._Second_);
-        if(Input.GetKeyDown(ThirdAbility)) Ability(AbilityEnum._Third_);
-        if(Input.GetKeyDown(UltimateAbility)) Ability(AbilityEnum._Ultimate_);
-    }
-
-    private void RightClick()
-    {
-        if(!Character.ChangeCurrentState(CharacterState._Walk_)) return;
-        var ray = MainCamera.ScreenPointToRay(Input.mousePosition);
-
-        if (!Physics.Raycast(ray, out var hit)) return;
-
-        switch (hit.transform.tag)
+        enum AbilityEnum
         {
             _First_,
             _Second_,
             _Third_,
             _Ultimate_
         }
-    }
-    
-    private void FixedUpdate()
-    {
-        if (!MoveCommand)
-        {
-            if ((Character.GetCurrentState() == CharacterState._Walk_ ||
-                 Character.GetCurrentState() == CharacterState._Slowed_))
-            {
-                if (Character.GetAgent().speed == 0) Character.GetAgent().speed = Character.GetMovementSpeed();
-                if (!Character.GetAgent().hasPath) Character.ChangeCurrentState(CharacterState._Idle_);
-                return;
-            }
-
-            Character.GetAgent().speed = 0;
-            return;
-        }
-        if (!Movement.MoveTowards(Character, TargetPosition)) return;
-        MoveCommand = false;
-    }
 
         public override void _Start_()
         {
@@ -94,36 +41,51 @@ namespace System
         public override void _Update_()
         {
             if (Input.GetMouseButtonDown(1)) RightClick();
-            if(Input.GetKeyDown(FirstAbility)) Ability(AbilityEnum._First_);
-            if(Input.GetKeyDown(SecondAbility)) Ability(AbilityEnum._Second_);
-            if(Input.GetKeyDown(ThirdAbility)) Ability(AbilityEnum._Third_);
-            if(Input.GetKeyDown(UltimateAbility)) Ability(AbilityEnum._Ultimate_);
+            if (Input.GetKeyDown(FirstAbility)) Ability(AbilityEnum._First_);
+            if (Input.GetKeyDown(SecondAbility)) Ability(AbilityEnum._Second_);
+            if (Input.GetKeyDown(ThirdAbility)) Ability(AbilityEnum._Third_);
+            if (Input.GetKeyDown(UltimateAbility)) Ability(AbilityEnum._Ultimate_);
         }
-        
+
         public override void _FixedUpdate_()
         {
-            if (!MoveCommand) return;
-            if (Movement.MoveTowards(Character, TargetPosition)) MoveCommand = false;
+            if (!MoveCommand)
+            {
+                if ((Character.GetCurrentState() == CharacterState._Walk_ ||
+                     Character.GetCurrentState() == CharacterState._Slowed_))
+                {
+                    if (Character.GetAgent().speed == 0) Character.GetAgent().speed = Character.GetMovementSpeed();
+                    if (!Character.GetAgent().hasPath) Character.ChangeCurrentState(CharacterState._Idle_);
+                    return;
+                }
+
+                Character.GetAgent().speed = 0;
+                return;
+            }
+
+            if (!Movement.MoveTowards(Character, TargetPosition)) return;
+            MoveCommand = false;
         }
-        
+
         private void RightClick()
         {
             var ray = MainCamera.ScreenPointToRay(Input.mousePosition);
 
             if (!Physics.Raycast(ray, out var hit)) return;
-
+            
             switch (hit.transform.tag)
             {
                 case "Character":
                     // Auto-attack
                     break;
                 default:
+                    if(!Character.ChangeCurrentState(CharacterState._Walk_)) return;
                     MoveCommand = true;
                     TargetPosition = hit.point;
                     break;
             }
         }
-        
+
         void Ability(AbilityEnum ability)
         {
             var target = SelectTarget();
@@ -133,7 +95,7 @@ namespace System
             {
                 character = AllCharacter.FirstOrDefault(c => target.transform.gameObject == c.gameObject);
             }
-        
+
             switch (ability)
             {
                 case AbilityEnum._First_:

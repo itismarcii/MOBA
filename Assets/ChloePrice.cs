@@ -1,4 +1,3 @@
-using System;
 using System.StateMachine;
 using BaseClass;
 using UnityEngine;
@@ -7,7 +6,7 @@ public class ChloePrice : Character
 {
     [SerializeField] private Transform SpellCastPosition;
     [SerializeField] private Spell FirstAbility;
-    
+
     private void Start()
     {
         SetMovementSpeed(1);

@@ -45,7 +45,7 @@ namespace BaseClass
         internal abstract void StartSpell(Building building);
         internal abstract void StartSpell(Building[] buildings);
 
-        public override void _Awake_()
+        public override void _Start_()
         {
             if (TravellingSpeed < 0) TravellingSpeed = 0;
             IsTravelling = false;
@@ -58,7 +58,6 @@ namespace BaseClass
             {
                 if (Movement.MoveTowards(this, TargetCharacter.transform.position)) return;
             }
-            
             if (Movement.MoveTowards(this, TargetVector3)) ;
         }
 
@@ -77,7 +76,7 @@ namespace BaseClass
 
         internal abstract void ActivateEffect();
 
-        internal void Destroy() => Destroy(gameObject); //CURRENTLY
+        internal void Destroy() => OnDestroy(); //CURRENTLY
         
         #region System
 
