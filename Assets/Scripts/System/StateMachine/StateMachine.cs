@@ -9,13 +9,15 @@ namespace System.StateMachine
     {
         private Character Character;
         [SerializeField] private CharacterState CurrentState; 
-        [SerializeField] private Condition[] Conditions;
+        private Condition[] Conditions;
         
         private void Awake()
         {
             Character = GetComponent<Character>();
-            Conditions = UnityEngine.Resources.LoadAll<Condition>("State");
-            foreach (var condition in Conditions) condition.SetCharacter(Character);
+            Conditions = new Condition[] { 
+                new IdleCondition(Character, CharacterState._Idle_), 
+                new WalkCondition(Character, CharacterState._Walk_), 
+                new StunnedCondition(Character, CharacterState._Stunned_) };
         }
 
         internal CharacterState GetCurrentState() => CurrentState;

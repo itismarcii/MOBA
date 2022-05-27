@@ -1,15 +1,10 @@
+using BaseClass;
 using UnityEngine;
 
 namespace System.StateMachine
 {
-    [CreateAssetMenu(fileName = "Walk", menuName = "Condition/Walk")]
     public class WalkCondition : Condition
     {
-        
-        private void Awake()
-        {
-            StateCondition = CharacterState._Walk_;
-        }
         
         internal override bool IsMet()
         {
@@ -17,6 +12,10 @@ namespace System.StateMachine
                    Character.GetCurrentState() != CharacterState._Slowed_ &&
                    Character.GetCurrentState() != CharacterState._Stunned_ &&
                    Character.GetCurrentState() != CharacterState._Charmed_;
+        }
+
+        public WalkCondition(Character character, CharacterState stateCondition) : base(character, stateCondition)
+        {
         }
     }
 }

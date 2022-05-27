@@ -1,8 +1,8 @@
+using BaseClass;
 using UnityEngine;
 
 namespace System.StateMachine
 {
-    [CreateAssetMenu(fileName = "Idle", menuName = "Condition/Idle")]
     public class IdleCondition : Condition
     {
         private void Awake()
@@ -13,6 +13,10 @@ namespace System.StateMachine
         internal override bool IsMet()
         {
             return true;
+        }
+
+        public IdleCondition(Character character, CharacterState stateCondition) : base(character, stateCondition)
+        {
         }
     }
 }

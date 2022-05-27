@@ -1,8 +1,8 @@
+using BaseClass;
 using UnityEngine;
 
 namespace System.StateMachine
 {
-    [CreateAssetMenu(fileName = "Stunned", menuName = "Condition/Stunned")]
     public class StunnedCondition : Condition
     {
         private void Awake()
@@ -13,6 +13,10 @@ namespace System.StateMachine
         internal override bool IsMet()
         {
             return true;
+        }
+
+        public StunnedCondition(Character character, CharacterState stateCondition) : base(character, stateCondition)
+        {
         }
     }
 }
