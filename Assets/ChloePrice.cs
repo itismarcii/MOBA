@@ -37,6 +37,8 @@ public class ChloePrice : Character
 
     internal override void ActivateFirstAbility(Vector3 target)
     {
+        if(!CanTransitionTo(CharacterState._CastAbility_)) return;
+        
         transform.LookAt(target);
         
         var fireball = Instantiate(FirstAbility);

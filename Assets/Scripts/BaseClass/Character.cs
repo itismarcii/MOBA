@@ -82,6 +82,7 @@ namespace BaseClass
 
         // SETTER
         internal bool ChangeCurrentState(CharacterState state) => StateMachine.ChangeState(state);
+        internal bool CanTransitionTo(CharacterState state) => StateMachine.TransitionAllowance(state);
         internal bool ChangeCurrentState(CharacterState state, float duration) => StateMachine.ChangeState(state, duration);
         internal void SetCharacterName(string characterName) => CharacterName = characterName;
         internal void SetTeam(Team team) => TeamEnum = team;

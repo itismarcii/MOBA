@@ -56,10 +56,11 @@ namespace System.StateMachine
             CurrentState = pastState;
         }
 
-        private bool TransitionAllowance(CharacterState state)
+        internal bool TransitionAllowance(CharacterState state)
         {
             var condition = Conditions.FirstOrDefault(condition => condition.GetStateCondition() == state);
             return condition != null && condition.IsMet();
         }
+
     }
 }

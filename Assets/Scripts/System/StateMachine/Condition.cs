@@ -6,7 +6,8 @@ namespace System.StateMachine
     public abstract class Condition
     {
         internal Character Character;
-        internal CharacterState StateCondition;
+        private readonly CharacterState StateCondition;
+
 
         protected Condition(Character character, CharacterState stateCondition)
         {
