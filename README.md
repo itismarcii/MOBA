@@ -13,3 +13,18 @@ NaveMesh movement (for now)
 Base MonoBehaviour that wraps all Updates into a single Method.
 
 Read for further information this article: https://blog.unity.com/technology/1k-update-calls
+
+## Plans
+StateMachine          ✔
+
+SkillTree             
+
+Improved Pathfinding  
+
+Buildings             
+
+EffectMachine 
+
+Menu
+
+Networking
