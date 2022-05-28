@@ -6,7 +6,7 @@ namespace System.StateMachine.Conditions
     {
         internal override bool IsMet()
         {
-            return true;
+            return Character.GetCurrentState() != CharacterState._Death_;
         }
 
         public StunnedCondition(Character character, CharacterState stateCondition) : base(character, stateCondition)

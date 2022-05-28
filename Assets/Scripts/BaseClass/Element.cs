@@ -1,4 +1,3 @@
-
 namespace BaseClass
 {
     public enum Element

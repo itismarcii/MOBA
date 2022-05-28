@@ -1,6 +1,6 @@
 using BaseClass;
 
-namespace System.StateMachine
+namespace System.StateMachine.Conditions
 {
     public class DeathCondition : Condition
     {

@@ -4,7 +4,6 @@ using System.StateMachine;
 using UnityEngine;
 using UnityEngine.AI;
 
-
 namespace BaseClass
 {
     [RequireComponent(typeof(NavMeshAgent), typeof(Rigidbody), typeof(CapsuleCollider))]

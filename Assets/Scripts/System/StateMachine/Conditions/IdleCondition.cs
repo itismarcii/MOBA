@@ -6,7 +6,10 @@ namespace System.StateMachine.Conditions
     {
         internal override bool IsMet()
         {
-            return true;
+            return Character.GetCurrentState() != CharacterState._Death_ &&
+                   Character.GetCurrentState() != CharacterState._Slowed_ &&
+                   Character.GetCurrentState() != CharacterState._Stunned_ &&
+                   Character.GetCurrentState() != CharacterState._Charmed_;
         }
 
         public IdleCondition(Character character, CharacterState stateCondition) : base(character, stateCondition)
