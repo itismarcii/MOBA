@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
@@ -7,10 +8,28 @@ namespace System.SkillMachine
     public class SkillTree
     {
         [Serializable]
-        private struct Branch
+        private class Branch
         {
             [SerializeField] internal Skill[] SkillBranch;
             [SerializeField] internal Branch[] NewBranch;
+
+            internal Skill[] SearchBranch(Skill[] addTo, Branch branch)
+            {
+                var skillList = addTo.ToList();
+
+                if (branch.NewBranch.Length > 0)
+                {
+                    foreach (var newBranch in branch.NewBranch)
+                    {
+                        var newSkills = SearchBranch(skillList.ToArray(), newBranch);
+                        foreach (var skill in newSkills) skillList.Add(skill);
+                    }
+                }
+
+                foreach (var skill in branch.SkillBranch) skillList.Add(skill);
+                
+                return skillList.ToArray();
+            }
         }
 
         [SerializeField] private Skill[] Skills;
@@ -21,6 +40,22 @@ namespace System.SkillMachine
                  " further in NewBranches acting as regular Branches")]
         [SerializeField] private Branch[] Tree;
 
+
+        internal Skill[] GetAllSkills()
+        {
+            if (Skills.Length > 0) return Skills;
+            
+            var allSkills = new List<Skill>();
+            foreach (var branch in Tree)
+            {
+                var branchSkills = branch.SearchBranch(allSkills.ToArray(), branch);
+                foreach (var skill in branchSkills) allSkills.Add(skill);
+            }
+
+            Skills = allSkills.ToArray();
+            return Skills;
+
+        }
         internal void UnlockSkill(Skill skill)
         {
             var selectedSkill = Skills.FirstOrDefault(s => s == skill);

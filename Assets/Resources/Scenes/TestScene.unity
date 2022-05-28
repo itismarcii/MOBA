@@ -532,6 +532,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   LoadingPriority: 0
+  SkillTree:
+    Skills: []
+    Tree:
+    - SkillBranch:
+      - {fileID: 0}
+      - {fileID: 0}
+      NewBranch:
+      - SkillBranch:
+        - {fileID: 0}
+        - {fileID: 0}
+        NewBranch:
+        - SkillBranch:
+          - {fileID: 0}
+          - {fileID: 0}
+          NewBranch: []
   TeamEnum: 0
   Health: 10
   SpellCastPosition: {fileID: 1070138728}

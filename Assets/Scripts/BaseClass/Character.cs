@@ -84,6 +84,7 @@ namespace BaseClass
 
         // GETTER
         internal CharacterState GetCurrentState() => StateMachine.GetCurrentState();
+        internal SkillTree GetSkillTree() => SkillTree;
         internal string GetCharacterName() => CharacterName;
         internal Team GetTeam() => TeamEnum;
         internal bool GetIsAlive() => IsAlive;

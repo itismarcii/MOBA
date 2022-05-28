@@ -8,6 +8,7 @@ public class ChloePrice : Character
 {
     [SerializeField] private Transform SpellCastPosition;
     [SerializeField] private Spell FirstAbility;
+    
     #region CustomEditor
 
     [CustomEditor(typeof(ChloePrice))]
