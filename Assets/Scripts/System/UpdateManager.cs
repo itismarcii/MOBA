@@ -6,12 +6,21 @@ namespace System
 {
     public class UpdateManager : MonoBehaviour
     {
+        private static UpdateManager _Instance;
+        
         public static readonly List<MagicBehaviour> Subscription = new List<MagicBehaviour>();
         public static MagicBehaviour[] Subscriber;
+
+        private void Awake()
+        {
+            if (!_Instance) _Instance = this;
+            else Destroy(this);
+        }
 
         private void Start()
         {
             Subscriber = Subscription.OrderBy(sub => sub.GetLoadingPriority()).ToArray();
+            Debug.Log("TIMES");
 
             foreach (var subscriber in Subscriber) subscriber._Awake_();
             foreach (var subscriber in Subscriber) subscriber._Start_();
