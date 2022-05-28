@@ -1,7 +1,7 @@
 # MOBA
 For fun MOBA base Project
 
-Package that allows the user to have a "to go" base MOBA like Character
+Package that allows the user to have a "to go" base MOBA like Character (further Environment)
 
 ## Implemented
 StateMachine  (Idle, Walk, Slowed, Stunned, CastAbility, Charmed (no timplemented jet), Death) 
