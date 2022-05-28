@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using UnityEngine;
 
 namespace System.SkillMachine
@@ -17,15 +18,15 @@ namespace System.SkillMachine
 
             internal void GiveID(Skill skill, uint id)
             {
-                skill.ID = new uint[] { ID, id };
+                skill.ID = new uint[] {ID, id};
             }
-            
+
             private Branch()
             {
                 ID = _Amount;
                 _Amount++;
             }
-            
+
             internal Skill[] SearchBranch(IEnumerable<Skill> addTo, Branch branch)
             {
                 var skillList = addTo.ToList();
@@ -47,11 +48,13 @@ namespace System.SkillMachine
 
         private Skill[] Skills;
         private Skill[] ActiveSkills;
-        
+        private Skill[] PassiveSkills;
+
         [Tooltip("The Tree has one or several Branches. Each Branch will allow to only unlock the Skill if the" +
                  " previous Skill in order was already unlocked. If all Skills got unlocked, it is possible to skill" +
                  " further in NewBranches acting as regular Branches")]
-        [SerializeField] private Branch[] Tree;
+        [SerializeField]
+        private Branch[] Tree;
 
 
         internal void ConfigSkills()
@@ -70,6 +73,7 @@ namespace System.SkillMachine
 
             Skills = allSkills.OrderByDescending(skill => skill.ID).ToArray();
         }
+
         internal void UnlockSkill(uint[] id)
         {
             var selectedSkill = SelectSkill(id);
@@ -81,6 +85,13 @@ namespace System.SkillMachine
             if (!selectedSkill.CheckActive()) return;
             
             var newArray = ActiveSkills.ToList();
+
+            if (selectedSkill.IsPassive)
+            {
+                var passiveList = PassiveSkills.ToList();
+                passiveList.Add(selectedSkill);
+                PassiveSkills = passiveList.ToArray();
+            }
             
             newArray.Add(selectedSkill);
             ActiveSkills = newArray.ToArray();
@@ -91,8 +102,13 @@ namespace System.SkillMachine
         internal uint[] GetSkillID(Skill skill)
         {
             skill = Skills.FirstOrDefault(s => s == skill);
-            if (skill == null) return null;
-            return skill.ID;
+            return skill == null ? null : skill.ID;
+        }
+
+        internal void RunPassiveSkills()
+        {
+            if(PassiveSkills == null) return;
+            foreach (var skill in PassiveSkills) skill.RunEffect();
         }
     }
 }

@@ -26,7 +26,7 @@ namespace BaseClass
 
         private bool IsAlive = true;
 
-        private int MaxHealth;
+        [SerializeField] private int MaxHealth;
         [SerializeField] private int Health;
         private int Armor;
         private int MagicResist;
@@ -72,7 +72,12 @@ namespace BaseClass
 
         public override void _Update_()
         {
-            base._Update_();
+            SkillTree.RunPassiveSkills();
+            CheckDeath();
+        }
+
+        private void CheckDeath()
+        {
             if (!CanTransitionTo(CharacterState._Death_)) return;
             ChangeCurrentState(CharacterState._Death_);
             Rigidbody.Sleep();
@@ -232,12 +237,13 @@ namespace BaseClass
 
         internal void Revive(Vector3 position)
         {
-            ChangeCurrentState(CharacterState._Idle_);
+            ChangeCurrentState(CharacterState._Revive_);
             SetHealth(GetMaxHealth());
             transform.position = position;
             Agent.enabled = true;
             Collider.enabled = true;
             Agent.SetDestination(position);
+            ChangeCurrentState(CharacterState._Idle_);
         }
 
         private void ReadInformation(TextAsset characterJson)

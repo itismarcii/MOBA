@@ -23,7 +23,8 @@ namespace System.StateMachine
                 new WalkCondition(Character, CharacterState._Walk_, false),
                 new CastAbilityCondition(Character, CharacterState._CastAbility_),
                 new StunnedCondition(Character, CharacterState._Stunned_),
-                new DeathCondition(Character, CharacterState._Death_)
+                new DeathCondition(Character, CharacterState._Death_),
+                new ReviveCondition(Character, CharacterState._Revive_)
             };
         }
 

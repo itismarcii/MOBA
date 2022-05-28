@@ -15,7 +15,7 @@ namespace System
             UpdateManager.Subscriber = UpdateManager.Subscription.ToArray();
         }
 
-        public virtual void _Awake_() {}
+        public virtual void _Awake_(){}
         public virtual void _Start_(){}
         public virtual void _Update_(){}
         public virtual void _FixedUpdate_(){}
