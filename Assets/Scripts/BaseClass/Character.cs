@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using System.SkillMachine;
 using System.StateMachine;
 using UnityEngine;
 using UnityEngine.AI;
@@ -18,6 +19,7 @@ namespace BaseClass
         }
 
         private StateMachine StateMachine;
+        [SerializeField] private SkillTree SkillTree = new SkillTree();
         
         private string CharacterName = "";
         [SerializeField, Space(10)] private Team TeamEnum;

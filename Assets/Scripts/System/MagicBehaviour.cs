@@ -3,6 +3,7 @@ using UnityEngine;
 
 namespace System
 {
+    [Serializable]
     public abstract class MagicBehaviour : MonoBehaviour
     {
         [SerializeField] protected uint LoadingPriority = 3;
