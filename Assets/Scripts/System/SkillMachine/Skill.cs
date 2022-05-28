@@ -3,6 +3,7 @@ namespace System.SkillMachine
     [Serializable]
     public abstract class Skill : MagicBehaviour
     {
+        internal uint[] ID;
         internal string SkillName = "";
         internal byte SkillPointsNeeded = 1;
         private bool Active = false;

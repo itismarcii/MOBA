@@ -19,10 +19,10 @@ namespace BaseClass
         }
 
         private StateMachine StateMachine;
-        [SerializeField] private SkillTree SkillTree = new SkillTree();
+        [SerializeField, Space(10)] private SkillTree SkillTree = new SkillTree();
         
         private string CharacterName = "";
-        [SerializeField, Space(10)] private Team TeamEnum;
+        [SerializeField] private Team TeamEnum;
 
         private bool IsAlive = true;
 
@@ -36,7 +36,7 @@ namespace BaseClass
         
         private int CoolDown;
         private int AttackSpeed;
-        private int CritChance;
+        private int CriticalChance;
         private float MovementSpeed;
         private int LifeSteal;
         private Element[] Elements;
@@ -67,6 +67,7 @@ namespace BaseClass
             Agent.acceleration = 200;
 
             transform.tag = "Character";
+            SkillTree.ConfigSkills();
         }
 
         public override void _Update_()
@@ -96,7 +97,7 @@ namespace BaseClass
         internal int GetMagicPower() => MagicPower;
         internal int GetCoolDown() => CoolDown;
         internal int GetAttackSpeed() => AttackSpeed;
-        internal int GetCritChange() => CritChance;
+        internal int GetCritChange() => CriticalChance;
         internal float GetMovementSpeed() => MovementSpeed;
         internal int GetLifeSteal() => LifeSteal;
         internal Element[] GetElements() => Elements;
@@ -121,7 +122,7 @@ namespace BaseClass
         internal void SetMagicPower(int magicPower) => MagicPower = magicPower;
         internal void SetCoolDown(int coolDown) => CoolDown = coolDown;
         internal void SetAttackSpeed(int attackSpeed) => AttackSpeed = attackSpeed;
-        internal void SetCritChance(int critChance) => CritChance = critChance;
+        internal void SetCriticalChance(int criticalChance) => CriticalChance = criticalChance;
         internal void SetMovementSpeed(float movementSpeed) => MovementSpeed = movementSpeed;
         internal void SetLifeSteal(int lifeSteal) => LifeSteal = lifeSteal;
         internal void SetElements(Element[] elements) => Elements = elements;
@@ -256,7 +257,7 @@ namespace BaseClass
 
             CoolDown = character.CoolDown;
             AttackSpeed = character.AttackSpeed;
-            CritChance = character.CritChance;
+            CriticalChance = character.CriticalChance;
             MovementSpeed = character.MovementSpeed;
             LifeSteal = character.LifeSteal;
             Elements = character.Elements;

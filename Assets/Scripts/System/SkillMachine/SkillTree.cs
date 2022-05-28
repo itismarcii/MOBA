@@ -10,10 +10,23 @@ namespace System.SkillMachine
         [Serializable]
         private class Branch
         {
+            private static uint _Amount = 0;
+            private uint ID;
             [SerializeField] internal Skill[] SkillBranch;
             [SerializeField] internal Branch[] NewBranch;
 
-            internal Skill[] SearchBranch(Skill[] addTo, Branch branch)
+            internal void GiveID(Skill skill, uint id)
+            {
+                skill.ID = new uint[] { ID, id };
+            }
+            
+            private Branch()
+            {
+                ID = _Amount;
+                _Amount++;
+            }
+            
+            internal Skill[] SearchBranch(IEnumerable<Skill> addTo, Branch branch)
             {
                 var skillList = addTo.ToList();
 
@@ -22,17 +35,17 @@ namespace System.SkillMachine
                     foreach (var newBranch in branch.NewBranch)
                     {
                         var newSkills = SearchBranch(skillList.ToArray(), newBranch);
-                        foreach (var skill in newSkills) skillList.Add(skill);
+                        skillList.AddRange(newSkills);
                     }
                 }
 
-                foreach (var skill in branch.SkillBranch) skillList.Add(skill);
-                
+                skillList.AddRange(branch.SkillBranch);
+
                 return skillList.ToArray();
             }
         }
 
-        [SerializeField] private Skill[] Skills;
+        private Skill[] Skills;
         private Skill[] ActiveSkills;
         
         [Tooltip("The Tree has one or several Branches. Each Branch will allow to only unlock the Skill if the" +
@@ -41,24 +54,25 @@ namespace System.SkillMachine
         [SerializeField] private Branch[] Tree;
 
 
-        internal Skill[] GetAllSkills()
+        internal void ConfigSkills()
         {
-            if (Skills.Length > 0) return Skills;
-            
             var allSkills = new List<Skill>();
             foreach (var branch in Tree)
             {
                 var branchSkills = branch.SearchBranch(allSkills.ToArray(), branch);
-                foreach (var skill in branchSkills) allSkills.Add(skill);
+
+                for (uint i = 0; i < branchSkills.Length; i++)
+                {
+                    branch.GiveID(branchSkills[i], i);
+                    allSkills.Add(branchSkills[i]);
+                }
             }
 
-            Skills = allSkills.ToArray();
-            return Skills;
-
+            Skills = allSkills.OrderByDescending(skill => skill.ID).ToArray();
         }
-        internal void UnlockSkill(Skill skill)
+        internal void UnlockSkill(uint[] id)
         {
-            var selectedSkill = Skills.FirstOrDefault(s => s == skill);
+            var selectedSkill = SelectSkill(id);
             
             if (selectedSkill == null) return;
             
@@ -70,6 +84,15 @@ namespace System.SkillMachine
             
             newArray.Add(selectedSkill);
             ActiveSkills = newArray.ToArray();
+        }
+
+        internal Skill SelectSkill(uint[] id) => Skills.FirstOrDefault(skill => skill.ID == id);
+
+        internal uint[] GetSkillID(Skill skill)
+        {
+            skill = Skills.FirstOrDefault(s => s == skill);
+            if (skill == null) return null;
+            return skill.ID;
         }
     }
 }
