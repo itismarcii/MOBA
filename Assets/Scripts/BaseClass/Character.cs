@@ -7,8 +7,9 @@ using UnityEngine.AI;
 
 namespace BaseClass
 {
-    [RequireComponent(typeof(NavMeshAgent), typeof(Rigidbody), typeof(StateMachine))]
-
+    [RequireComponent(typeof(NavMeshAgent), typeof(Rigidbody), typeof(CapsuleCollider))]
+    [RequireComponent(typeof(MeshFilter), typeof(MeshRenderer), typeof(PhysicMaterial))]
+    [RequireComponent(typeof(StateMachine), typeof(InputListener))]
     public abstract class Character : MagicBehaviour
     {
         public enum Team
@@ -20,11 +21,12 @@ namespace BaseClass
         private StateMachine StateMachine;
         
         private string CharacterName = "";
-        [SerializeField] private Team TeamEnum;
+        [SerializeField, Space(10)] private Team TeamEnum;
 
         private bool IsAlive = true;
-    
-        private int Health;
+
+        private int MaxHealth;
+        [SerializeField] private int Health;
         private int Armor;
         private int MagicResist;
 
@@ -45,18 +47,37 @@ namespace BaseClass
         private Spell[] Skills;
 
         private NavMeshAgent Agent;
+        private Rigidbody Rigidbody;
+        private Collider Collider;
 
+        void Awake()
+        {
+            LoadingPriority = 0;
+        }
+        
         public override void _Awake_()
         {
             StateMachine = GetComponent<StateMachine>();
-            GetComponent<Rigidbody>().isKinematic = true;
+            Rigidbody = GetComponent<Rigidbody>();
+            Collider = GetComponent<Collider>();
+            Rigidbody.isKinematic = true;
             Agent = GetComponent<NavMeshAgent>();
             Agent.angularSpeed = 1000;
             Agent.acceleration = 200;
 
             transform.tag = "Character";
         }
-        
+
+        public override void _Update_()
+        {
+            base._Update_();
+            if (!CanTransitionTo(CharacterState._Death_)) return;
+            ChangeCurrentState(CharacterState._Death_);
+            Rigidbody.Sleep();
+            Agent.enabled = false;
+            Collider.enabled = false;
+        }
+
 
         #region Getter & Setter
 
@@ -65,6 +86,7 @@ namespace BaseClass
         internal string GetCharacterName() => CharacterName;
         internal Team GetTeam() => TeamEnum;
         internal bool GetIsAlive() => IsAlive;
+        internal int GetMaxHealth() => MaxHealth;
         internal int GetHealth() => Health;
         internal int GetArmor() => Armor;
         internal int GetMagicResist() => MagicResist;
@@ -89,6 +111,7 @@ namespace BaseClass
         internal void SetCharacterName(string characterName) => CharacterName = characterName;
         internal void SetTeam(Team team) => TeamEnum = team;
         internal void SetIsAlive(bool alive) => IsAlive = alive;
+        internal void SetMaxHealth(int health) => MaxHealth = health;
         internal void SetHealth(int health) => Health = health;
         internal void SetArmor(int armor) => Armor = armor;
         internal void SetMagicResist(int magicResist) => MagicResist = magicResist;
@@ -99,7 +122,7 @@ namespace BaseClass
         internal void SetCritChance(int critChance) => CritChance = critChance;
         internal void SetMovementSpeed(float movementSpeed) => MovementSpeed = movementSpeed;
         internal void SetLifeSteal(int lifeSteal) => LifeSteal = lifeSteal;
-        internal void SetElements(Element[] elements) => Elements = Elements;
+        internal void SetElements(Element[] elements) => Elements = elements;
         internal void SetElement(Element element)
         {
             var elements = Elements.ToList();
@@ -203,6 +226,16 @@ namespace BaseClass
         #endregion
 
         #region System
+
+        internal void Revive(Vector3 position)
+        {
+            ChangeCurrentState(CharacterState._Idle_);
+            SetHealth(GetMaxHealth());
+            transform.position = position;
+            Agent.enabled = true;
+            Collider.enabled = true;
+            Agent.SetDestination(position);
+        }
 
         private void ReadInformation(TextAsset characterJson)
         {

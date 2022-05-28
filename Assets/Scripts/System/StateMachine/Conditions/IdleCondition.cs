@@ -1,7 +1,6 @@
 using BaseClass;
-using UnityEngine;
 
-namespace System.StateMachine
+namespace System.StateMachine.Conditions
 {
     public class IdleCondition : Condition
     {

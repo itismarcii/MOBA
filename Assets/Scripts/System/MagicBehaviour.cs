@@ -1,13 +1,18 @@
+using System.Linq;
+using UnityEditor;
 using UnityEngine;
 
 namespace System
 {
     public abstract class MagicBehaviour : MonoBehaviour
     {
-        private void Awake()
+        [SerializeField] protected uint LoadingPriority = 3;
+        internal uint GetLoadingPriority() => LoadingPriority;
+        
+        private void OnEnable()
         {
             UpdateManager.Subscription.Add(this);
-            UpdateManager._Subscriber = UpdateManager.Subscription.ToArray();
+            UpdateManager.Subscriber = UpdateManager.Subscription.ToArray();
         }
 
         public virtual void _Awake_() {}
@@ -19,7 +24,7 @@ namespace System
         public void OnDestroy()
         {
             UpdateManager.Subscription.Remove(this);
-            UpdateManager._Subscriber = UpdateManager.Subscription.ToArray();
+            UpdateManager.Subscriber = UpdateManager.Subscription.OrderByDescending(subscriber => LoadingPriority).ToArray();
             Destroy(gameObject);
         }
     }

@@ -16,10 +16,10 @@ namespace System
 
 
         // Abilites
-        [SerializeField] private KeyCode FirstAbility;
-        [SerializeField] private KeyCode SecondAbility;
-        [SerializeField] private KeyCode ThirdAbility;
-        [SerializeField] private KeyCode UltimateAbility;
+        [SerializeField, Space(10)] private KeyCode FirstAbility = KeyCode.Q;
+        [SerializeField] private KeyCode SecondAbility = KeyCode.W;
+        [SerializeField] private KeyCode ThirdAbility = KeyCode.E;
+        [SerializeField] private KeyCode UltimateAbility = KeyCode.R;
 
 
         enum AbilityEnum

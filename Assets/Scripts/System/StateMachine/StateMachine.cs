@@ -1,26 +1,29 @@
 using System.Collections;
+using System.Data;
 using System.Linq;
+using System.StateMachine.Conditions;
 using BaseClass;
 using UnityEngine;
 
 namespace System.StateMachine
 {
-    public class StateMachine : MonoBehaviour
+    public class StateMachine : MagicBehaviour
     {
         private Character Character;
-        [SerializeField] private CharacterState CurrentState; 
+        [SerializeField, Space(10)] private CharacterState CurrentState; 
         private Condition[] Conditions;
         private IEnumerator CurrentCoroutine;
         private CharacterState? PastState;
         
-        private void Awake()
+        public override void _Awake_()
         {
             Character = GetComponent<Character>();
             Conditions = new Condition[] { 
                 new IdleCondition(Character, CharacterState._Idle_), 
                 new WalkCondition(Character, CharacterState._Walk_, false),
                 new CastAbilityCondition(Character, CharacterState._CastAbility_),
-                new StunnedCondition(Character, CharacterState._Stunned_) 
+                new StunnedCondition(Character, CharacterState._Stunned_),
+                new DeathCondition(Character, CharacterState._Death_)
             };
         }
 
