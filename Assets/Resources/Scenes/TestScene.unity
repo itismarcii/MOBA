@@ -535,6 +535,7 @@ MonoBehaviour:
   SkillTree:
     Tree: []
   TeamEnum: 0
+  MaxHealth: 0
   Health: 10
   SpellCastPosition: {fileID: 1070138728}
   FirstAbility: {fileID: 6875488936000168007, guid: 7b2b22e16261b144dbfdad97a267e884, type: 3}

@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading;
 using UnityEngine;
 
 namespace System.SkillMachine
@@ -9,7 +8,8 @@ namespace System.SkillMachine
     public class SkillTree
     {
         [Serializable]
-        private class Branch
+        [CreateAssetMenu(fileName = "Branch", menuName = "SkillTree")]
+        private class Branch : ScriptableObject
         {
             private static uint _Amount = 0;
             private uint ID;
