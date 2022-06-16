@@ -8,6 +8,7 @@ namespace System.StateMachine
         _Stunned_,
         _Charmed_,
         _Slowed_,
-        _Death_
+        _Death_,
+        _Revive_
     }
 }

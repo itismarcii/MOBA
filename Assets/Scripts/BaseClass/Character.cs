@@ -1,6 +1,6 @@
 using System;
 using System.Linq;
-///using System.SkillMachine;
+using System.SkillMachine;
 using System.StateMachine;
 using UnityEngine;
 using UnityEngine.AI;
@@ -22,7 +22,7 @@ namespace BaseClass
         internal struct Info
         {
             internal StateMachine StateMachine;
-            //[SerializeField, Space(10)] internal SkillTree SkillTree;
+            [SerializeField, Space(10)] internal SkillTree SkillTree;
         
             internal string CharacterName;
             [SerializeField] internal Team TeamEnum;
@@ -97,7 +97,7 @@ namespace BaseClass
 
         // GETTER
         internal CharacterState GetCurrentState() => Information.StateMachine.GetCurrentState();
-        //internal SkillTree GetSkillTree() => Information.SkillTree;
+        internal SkillTree GetSkillTree() => Information.SkillTree;
         internal string GetCharacterName() => Information.CharacterName;
         internal Team GetTeam() => Information.TeamEnum;
         internal bool GetIsAlive() => Information.IsAlive;
@@ -244,7 +244,7 @@ namespace BaseClass
 
         internal void Revive(Vector3 position)
         {
-            //ChangeCurrentState(CharacterState._Revive_);
+            ChangeCurrentState(CharacterState._Revive_);
             SetHealth(GetMaxHealth());
             transform.position = position;
             Information.Agent.enabled = true;

@@ -9,7 +9,7 @@ namespace System
         private static UpdateManager _Instance;
         
         public static readonly List<MagicBehaviour> Subscription = new List<MagicBehaviour>();
-        public static MagicBehaviour[] Subscriber;
+        internal static MagicBehaviour[] Subscriber;
 
         private void Awake()
         {
@@ -20,7 +20,6 @@ namespace System
         private void Start()
         {
             Subscriber = Subscription.OrderBy(sub => sub.GetLoadingPriority()).ToArray();
-            Debug.Log("TIMES");
 
             foreach (var subscriber in Subscriber) subscriber._Awake_();
             foreach (var subscriber in Subscriber) subscriber._Start_();
